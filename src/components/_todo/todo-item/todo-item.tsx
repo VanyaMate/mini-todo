@@ -1,26 +1,29 @@
-import { useActions } from '@/hooks/redux/use-actions.hook.ts';
+import {
+    TodoChangeHandler,
+    TodoDeleteHandler,
+} from '@/components/_todo/todo.types.ts';
 import { ITodo } from '@/store/todo/todo.interfaces.ts';
 import { Checkbox } from 'antd';
-import React, { useCallback } from 'react';
-
+import React, { MouseEventHandler, useCallback } from 'react';
 
 export interface ITodoItemProps {
     item: ITodo;
+    onChange: TodoChangeHandler;
+    onDelete: TodoDeleteHandler;
 }
 
-const TodoItem: React.FC<ITodoItemProps> = (props) => {
-    const { todo } = useActions();
-    const toggle   = useCallback(() => {
-        todo.setItemStatus({
-            id    : props.item.id,
-            status: !props.item.status,
-        });
-    }, [ todo ]);
+const TodoItem: React.FC<ITodoItemProps> = (props: ITodoItemProps) => {
+    const onChange = useCallback<MouseEventHandler<HTMLElement>>((e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        props.onChange(props.item.id, !props.item.status);
+    }, [ props.onChange ]);
 
     return (
         <div>
-            <Checkbox checked={ props.item.status }
-                      onChange={ toggle }
+            <Checkbox
+                onClick={ onChange }
+                checked={ props.item.status }
             >
                 { props.item.title }
             </Checkbox>

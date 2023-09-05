@@ -2,8 +2,15 @@ import { ITodo } from '@/store/todo/todo.interfaces.ts';
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
 
 
+export enum TodoListType {
+    ALL       = 'all',
+    COMPLETED = 'completed',
+    ACTIVE    = 'active',
+}
+
 export interface ITodoSlice {
     list: ITodo[],
+    type: TodoListType
 }
 
 const initialState: ITodoSlice = {
@@ -22,12 +29,19 @@ const initialState: ITodoSlice = {
             status: false,
         },
     ],
+    type: TodoListType.ALL,
 };
 
 export const todoSlice = createSlice({
     name        : 'todo',
     initialState: initialState,
     reducers    : {
+        setListType (
+            state: Draft<ITodoSlice>,
+            action: PayloadAction<TodoListType>,
+        ) {
+            state.type = action.payload;
+        },
         setItemStatus (
             state: Draft<ITodoSlice>,
             action: PayloadAction<{
