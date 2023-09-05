@@ -27,20 +27,20 @@ const TodoList: React.FC = () => {
     const clearCompletedItems         = useCallback(() => {
         todo.removeCompletedItems();
     }, [ todo ]);
-    const addItem                     = useCallback<TodoAddHandler>((title: string) => {
+    const addItem: TodoAddHandler     = useCallback<TodoAddHandler>((title: string) => {
         todo.addItem({
             id    : Math.random(),
             title : title,
             status: false,
         });
         setTodoTitle('');
-    });
+    }, [ todo, setTodoTitle ]);
     const changeItem                  = useCallback<TodoChangeHandler>((id: number, status: boolean) => {
         todo.setItemStatus({ id, status });
-    });
+    }, [ todo ]);
     const removeItem                  = useCallback<TodoDeleteHandler>((id: number) => {
         todo.removeItem(id);
-    });
+    }, [ todo ]);
     const todolist: ITodo[]           = useMemo<ITodo[]>(() => {
         if (todoSlice.type === TodoListType.ALL) {
             return todoSlice.list;
