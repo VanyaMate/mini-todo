@@ -15,7 +15,7 @@ export interface ITodoSlice {
 
 const initialState: ITodoSlice = {
     list: [
-        {
+/*        {
             id    : 1,
             title : 'First',
             status: true,
@@ -27,7 +27,7 @@ const initialState: ITodoSlice = {
             id    : 3,
             title : 'Third',
             status: false,
-        },
+        },*/
     ],
     type: TodoListType.ALL,
 };

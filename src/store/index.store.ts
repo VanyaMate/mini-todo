@@ -1,11 +1,21 @@
 import { todoSlice } from '@/store/todo/todo.slice.ts';
-import { configureStore } from '@reduxjs/toolkit';
+import {
+    combineReducers,
+    configureStore,
+    PreloadedState,
+} from '@reduxjs/toolkit';
 
 
-export const store = configureStore({
-    reducer: {
-        [todoSlice.name]: todoSlice.reducer,
-    },
+const reducers = combineReducers({
+    [todoSlice.name]: todoSlice.reducer,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export const store = function (preloadedState?: PreloadedState<RootState>) {
+    return configureStore({
+        reducer: reducers,
+        preloadedState,
+    });
+};
+
+export type RootState = ReturnType<typeof reducers>;
+export type AppStore = ReturnType<typeof store>;
