@@ -14,6 +14,9 @@ export default defineConfig({
             '@': '/src',
         },
     },
+    build  : {
+        outDir: 'docs',
+    },
     test   : {
         globals    : true,
         setupFiles : './jest.setup.ts',
