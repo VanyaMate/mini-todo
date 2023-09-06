@@ -16,11 +16,13 @@ describe('[redux-slice] Todo', () => {
 
     it('[init] Filled', () => {
         expect(todoSlice.reducer({
-            list: [ {
-                id    : 1,
-                title : 'title',
-                status: false,
-            } ],
+            list: [
+                {
+                    id    : 1,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         }, { type: undefined })).toEqual({
             list: [ { id: 1, title: 'title', status: false } ],
@@ -34,39 +36,60 @@ describe('[redux-slice] Todo', () => {
             title : 'title',
             status: false,
         }))).toEqual({
-            list: [ {
-                id    : 1,
-                title : 'title',
-                status: false,
-            } ],
+            list: [
+                {
+                    id    : 1,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         });
     });
 
     it('[action] Remove item', () => {
         const initialState: ITodoSlice = {
-            list: [ {
-                id    : 1,
-                title : 'title',
-                status: false,
-            } ],
+            list: [
+                {
+                    id    : 1,
+                    title : 'title',
+                    status: false,
+                },
+                {
+                    id    : 2,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         };
 
 
         expect(todoSlice.reducer(initialState, todoSlice.actions.removeItem(1))).toEqual({
-            list: [],
+            list: [
+                {
+                    id    : 2,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         });
     });
 
     it('[action] Change item status', () => {
         const initialState: ITodoSlice = {
-            list: [ {
-                id    : 1,
-                title : 'title',
-                status: false,
-            } ],
+            list: [
+                {
+                    id    : 1,
+                    title : 'title',
+                    status: false,
+                }, {
+                    id    : 2,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         };
 
@@ -75,28 +98,53 @@ describe('[redux-slice] Todo', () => {
             id    : 1,
             status: true,
         }))).toEqual({
-            list: [ {
-                id    : 1,
-                title : 'title',
-                status: true,
-            } ],
+            list: [
+                {
+                    id    : 1,
+                    title : 'title',
+                    status: true,
+                },
+                {
+                    id    : 2,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         });
     });
 
     it('[action] Remove all completed items', () => {
         const initialState: ITodoSlice = {
-            list: [ {
-                id    : 1,
-                title : 'title',
-                status: true,
-            } ],
+            list: [
+                {
+                    id    : 1,
+                    title : 'title',
+                    status: true,
+                },
+                {
+                    id    : 2,
+                    title : 'title',
+                    status: true,
+                },
+                {
+                    id    : 3,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         };
 
 
         expect(todoSlice.reducer(initialState, todoSlice.actions.removeCompletedItems())).toEqual({
-            list: [],
+            list: [
+                {
+                    id    : 3,
+                    title : 'title',
+                    status: false,
+                },
+            ],
             type: TodoListType.ALL,
         });
     });
